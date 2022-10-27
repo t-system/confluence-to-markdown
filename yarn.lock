@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@guyplusplus/turndown-plugin-gfm@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@guyplusplus/turndown-plugin-gfm/-/turndown-plugin-gfm-1.0.7.tgz#55c07d549a321a956a1657db1b3858f362c9c5e1"
+  integrity sha512-k2KATk491JIeq1KNsjOwaD88cdknQeTpKVXh9OuZfHdjFuSEtEVVDCfCbxzmRvJxeKDPbZQl8DGP5o7SaIvWBw==
+  dependencies:
+    turndown "^7.1.1"
+
 assertion-error@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.1.0.tgz#e60b6b0e8f301bd97e5375215bda406c85118c0b"
@@ -540,6 +547,13 @@ sync-exec@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/sync-exec/-/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
   integrity sha512-FHup6L3hMWn+2asiIC/7kj/3CaMM8aAAKPx62DRk42hQkz4H2yBADR0OnnY8Eh5Bxrzb371aPUfnW4WzAUYItQ==
+
+turndown-plugin-confluence-to-gfm@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/turndown-plugin-confluence-to-gfm/-/turndown-plugin-confluence-to-gfm-0.5.0.tgz#27bfc4cccf732790c1795439caf1e9f1436e07bd"
+  integrity sha512-UlwAIIG4uLlOtl1NkN6kao6c0NmBObrs5FXHPsRnYaZ0ZrHnDF5HGAep9jVr2O4uMBm2W9Tv2M4dlEsVRqTjeQ==
+  dependencies:
+    "@guyplusplus/turndown-plugin-gfm" "^1.0.7"
 
 turndown@^7.1.1:
   version "7.1.1"

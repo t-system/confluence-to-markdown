@@ -8,6 +8,7 @@ class Bootstrap
   _mkdirp = require 'mkdirp'
   _turndownService = require 'turndown'
   _turndownPluginGfm = require 'joplin-turndown-plugin-gfm'
+  _confluenceTurndownPluginGfm = require 'turndown-plugin-confluence-to-gfm'
 
   Utils = require './Utils'
   Logger = require './Logger'
@@ -28,10 +29,13 @@ class Bootstrap
     utils = new Utils _fs, _path, _ncp, logger
     formatter = new Formatter _cheerio, utils, logger
     pageFactory = new PageFactory formatter, utils
-    app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm
+    app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm
 
+
+    console.log('\n--------------------')
     logger.info 'Using source: ' + pathResource
     logger.info 'Using destination: ' + pathResult
+    console.log('--------------------\n')
 
     app.convert pathResource, pathResult
 

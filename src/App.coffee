@@ -25,7 +25,7 @@ class App
   # @param {PageFactory} pageFactory My lib
   # @param {Logger} logger My lib
   ###
-  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger, @_turndownService, @_turndownPluginGfm) ->
+  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger, @_turndownService, @_turndownPluginGfm, @_confluenceTurndownPluginGfm) ->
     typesAdd = App.outputTypesAdd.join '+'
     typesRemove = App.outputTypesRemove.join '-'
     typesRemove = if typesRemove then '-' + typesRemove else ''
@@ -85,9 +85,9 @@ class App
         @logger.error 'Unable to create directory #{fullOutDirName}'
 
 
-    gfm = @_turndownPluginGfm.gfm
     turndownService = new @_turndownService()
-    turndownService.use(gfm)
+    turndownService.use(@_turndownPluginGfm.gfm)
+    turndownService.use(@_confluenceTurndownPluginGfm.confluenceGfm)
 
     markdown = turndownService.turndown(text)
     @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
