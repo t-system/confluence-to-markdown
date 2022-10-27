@@ -48,9 +48,10 @@ class Formatter
         .find('#main-content>.confluenceTable').remove().end() # Removes arbitrary table located on top of index page
     else
       selector = [
-        '#main-content'
-        '.pageSection.group:has(.pageSectionHeader>#attachments)'
-        '.pageSection.group:has(.pageSectionHeader>#comments)'
+        '#content'
+        # '#main-content'
+        # '.pageSection.group:has(.pageSectionHeader>#attachments)'
+        # '.pageSection.group:has(.pageSectionHeader>#comments)'
       ]
       $content.find selector.join ', '
 
