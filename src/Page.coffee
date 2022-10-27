@@ -36,6 +36,9 @@ class Page
       indexName = @content.find('#breadcrumbs .first').text().trim()
       title.replace indexName + ' : ', ''
 
+  getLocalDir: () ->
+    return @formatter.getLocalDir(@content)
+
 
   ###*
   # Converts HTML file at given path to MD formatted text.

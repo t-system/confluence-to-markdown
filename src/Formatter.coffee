@@ -55,6 +55,14 @@ class Formatter
       ]
       $content.find selector.join ', '
 
+  getLocalDir: ($content) ->
+    $ = @_cheerio
+    locaDir = []
+
+    $content.find('#breadcrumbs a').each (i, elem) =>
+      locaDir.push $(elem).text()
+
+    return locaDir.join('/')
 
   ###*
   # Removes span inside of a h1 tag.

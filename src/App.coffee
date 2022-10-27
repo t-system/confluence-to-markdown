@@ -63,8 +63,10 @@ class App
   ###
   convertPage: (page, dirIn, dirOut, pages) ->
     @logger.info 'Parsing ... ' + page.path
+
     text = page.getTextToConvert pages
-    fullOutFileName = @_path.join dirOut, page.space, page.fileNameNew
+    localDir = page.getLocalDir()
+    fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
 
     @logger.info 'Making Markdown ... ' + fullOutFileName
     @writeMarkdownFile text, fullOutFileName
