@@ -69,7 +69,7 @@ class App
     fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
 
     @logger.info 'Making Markdown ... ' + fullOutFileName
-    @writeMarkdownFile text, fullOutFileName
+    @writeMarkdownFile text, fullOutFileName, page.confluenceId
     @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
     @logger.info 'Done\n'
 
