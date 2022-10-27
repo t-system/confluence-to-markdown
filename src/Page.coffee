@@ -9,6 +9,7 @@ class Page
   init: () ->
     @fileName = @utils.getBasename @path
     @fileBaseName = @utils.getBasename @path, '.html'
+    @confluenceId = @utils.getConfluenceIdFromName(@fileBaseName)
     @filePlainText = @utils.readFile @path
     @$ = @formatter.load @filePlainText
     @content = @$.root()

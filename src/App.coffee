@@ -77,7 +77,7 @@ class App
   # @param {string} fullOutFileName Absolute path to resulting file
   # @return {string} Absolute path to created MD file
   ###
-  writeMarkdownFile: (text, fullOutFileName) ->
+  writeMarkdownFile: (text, fullOutFileName, confluenceId) ->
     fullOutDirName = @utils.getDirname fullOutFileName
 
     @_mkdirp.sync fullOutDirName, (error) ->
@@ -89,7 +89,7 @@ class App
     turndownService.use(@_turndownPluginGfm.gfm)
     turndownService.use(@_confluenceTurndownPluginGfm.confluenceGfm)
 
-    markdown = turndownService.turndown(text)
+    markdown = turndownService.turndown(confluenceId + text)
     @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
 
 
