@@ -25,7 +25,7 @@ class App
   # @param {PageFactory} pageFactory My lib
   # @param {Logger} logger My lib
   ###
-  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger) ->
+  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger, @_turndownService, @_turndownPluginGfm) ->
     typesAdd = App.outputTypesAdd.join '+'
     typesRemove = App.outputTypesRemove.join '-'
     typesRemove = if typesRemove then '-' + typesRemove else ''
@@ -79,19 +79,19 @@ class App
   ###
   writeMarkdownFile: (text, fullOutFileName) ->
     fullOutDirName = @utils.getDirname fullOutFileName
+
     @_mkdirp.sync fullOutDirName, (error) ->
       if error
         @logger.error 'Unable to create directory #{fullOutDirName}'
 
-    tempInputFile = fullOutFileName + '~'
-    @_fs.writeFileSync tempInputFile, text, flag: 'w'
-    command = 'pandoc -f html ' +
-      @pandocOptions +
-      ' -o "' + fullOutFileName + '"' +
-      ' "' + tempInputFile + '"'
-    out = @_exec command, cwd: fullOutDirName
-    @logger.error out.stderr if out.status > 0
-    @_fs.unlinkSync tempInputFile
+
+    gfm = @_turndownPluginGfm.gfm
+    turndownService = new @_turndownService()
+    turndownService.use(gfm)
+
+    markdown = turndownService.turndown(text)
+    @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
+
 
 
   ###*
