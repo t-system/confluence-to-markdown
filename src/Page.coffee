@@ -22,11 +22,12 @@ class Page
   getSpacePath: () ->
     '../' + @utils.sanitizeFilename(@space) + '/' + @fileNameNew
 
-
+  getFileNameNewRaw: () ->
+    return 'index' if @fileName == 'index.html'
+    @utils.sanitizeFilename(@heading)
+  
   getFileNameNew: () ->
-    return 'index.md' if @fileName == 'index.html'
-    @utils.sanitizeFilename(@heading) + '.md'
-
+    return @getFileNameNewRaw() + '.md'
 
   getHeading: () ->
     title = @content.find('title').text()
@@ -56,7 +57,7 @@ class Page
     content = @formatter.fixArbitraryClasses content
     content = @formatter.fixAttachmentWraper content
     content = @formatter.fixPageLog content
-    content = @formatter.fixLocalLinks content, @space, pages
+    # content = @formatter.fixLocalLinks content, @space, pages
     content = @formatter.addPageHeading content, @heading
     @formatter.getHtml content
 

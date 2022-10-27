@@ -45,7 +45,7 @@ class Formatter
   getRightContentByFileName: ($content, fileName) ->
     if fileName == 'index.html'
       $content.find('#content')
-        .find('#main-content>.confluenceTable').remove().end() # Removes arbitrary table located on top of index page
+        # .find('#main-content>.confluenceTable').remove().end() # Removes arbitrary table located on top of index page
     else
       selector = [
         '#content'

@@ -66,6 +66,7 @@ class App
 
     text = page.getTextToConvert pages
     localDir = page.getLocalDir()
+
     fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
 
     @logger.info 'Making Markdown ... ' + fullOutFileName
@@ -91,7 +92,7 @@ class App
     turndownService.use(@_turndownPluginGfm.gfm)
     turndownService.use(@_confluenceTurndownPluginGfm.confluenceGfm)
 
-    markdown = turndownService.turndown(confluenceId + text)
+    markdown = turndownService.turndown((confluenceId || '') + text)
     @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
 
 
