@@ -42,6 +42,7 @@ class App
   # @param {string} dirOut Directory where to place converted MD files
   ###
   convert: (dirIn, dirOut, runScript) ->
+    @logger.info 'Converting HTML to markdown...\n'
     filePaths = @utils.readDirRecursive dirIn
     pages = (@pageFactory.create filePath for filePath in filePaths when filePath.endsWith '.html')
 
@@ -57,6 +58,7 @@ class App
     @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
     
     @logger.info 'Markdown conversion done!'
+    @logger.info '----------------------------------------'
 
     if runScript != false
       @logger.info '\nRunning cleanup scripts...\n'
