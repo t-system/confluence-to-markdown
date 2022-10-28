@@ -27,13 +27,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-fs": "^0.1.0",
-    "mocha": "^3.1.0"
+    "chai-fs": "^0.1.0"
   },
   "scripts": {
     "start": "coffee ./src/index.coffee",
-    "build": "coffee --output dist --compile src",
-    "test": "NODE_ENV=test mocha -r coffee-script/register --compilers coffee:coffee-script --recursive ./test/*.coffee",
-    "test-watch": "NODE_ENV=test mocha -r coffee-script/register --compilers coffee:coffee-script --recursive test/*.coffee --watch"
+    "build": "coffee --output dist --compile src"
   }
 }
