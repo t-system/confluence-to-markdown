@@ -15,6 +15,7 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "coffee-script": "^1.10.0",
+    "figlet": "^1.5.2",
     "fs": "0.0.1-security",
     "joplin-turndown-plugin-gfm": "^1.0.12",
     "mkdirp": "^0.5.1",

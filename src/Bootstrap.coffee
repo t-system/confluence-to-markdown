@@ -9,6 +9,7 @@ class Bootstrap
   _turndownService = require 'turndown'
   _turndownPluginGfm = require 'joplin-turndown-plugin-gfm'
   _confluenceTurndownPluginGfm = require 'turndown-plugin-confluence-to-gfm'
+  _figlet = require 'figlet'
 
   Utils = require './Utils'
   Logger = require './Logger'
@@ -30,6 +31,36 @@ class Bootstrap
     formatter = new Formatter _cheerio, utils, logger
     pageFactory = new PageFactory formatter, utils
     app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm
+  
+
+    logger.info _figlet.textSync 'say', {
+      font: 'standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'goodbye', {
+      font: 'Big Money-ne',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'to', {
+      font: 'standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'confluence', {
+      font: 'Bloody',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 100,
+      whitespaceBreak: true
+    }
 
     logger.info '\n----------------------------------------'
     logger.info 'Using source: ' + pathResource
@@ -37,6 +68,27 @@ class Bootstrap
     logger.info '----------------------------------------\n'
 
     app.convert pathResource, pathResult, runScript
+    logger.info '\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣉⡥⠶⢶⣿⣿⣿⣿⣷⣆⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡿⢡⡞⠁⠀⠀⠤⠈⠿⠿⠿⠿⣿⠀⢻⣦⡈⠻⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡇⠘⡁⠀⢀⣀⣀⣀⣈⣁⣐⡒⠢⢤⡈⠛⢿⡄⠻⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡇⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠉⠐⠄⡈⢀⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⠇⢠⣿⣿⣿⣿⡿⢿⣿⣿⣿⠁⢈⣿⡄⠀⢀⣀⠸⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⡿⠟⣡⣶⣶⣬⣭⣥⣴⠀⣾⣿⣿⣿⣶⣾⣿⣧⠀⣼⣿⣷⣌⡻⢿⣿\n
+    ⣿⣿⠟⣋⣴⣾⣿⣿⣿⣿⣿⣿⣿⡇⢿⣿⣿⣿⣿⣿⣿⡿⢸⣿⣿⣿⣿⣷⠄⢻\n
+    ⡏⠰⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢂⣭⣿⣿⣿⣿⣿⠇⠘⠛⠛⢉⣉⣠⣴⣾\n
+    ⣿⣷⣦⣬⣍⣉⣉⣛⣛⣉⠉⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿⢰⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡘⣿⣿⣿⣿⣿⣿⣿⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⠁⣿⣿⣿⣿⣿⣿⣿⣿⣿\n
+'
+    logger.info _figlet.textSync 'export complete', {
+      font: 'Standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 100,
+      whitespaceBreak: true
+    }
 
 
 module.exports = Bootstrap

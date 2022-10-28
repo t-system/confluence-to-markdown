@@ -66,7 +66,6 @@ class App
       @logger.info out.stdout
       @logger.error out.stderr if out.status > 0
       @logger.info 'Cleanup scripts done!\n'
-    @logger.info '\nEXPORT COMPLETE\n'
 
   ###*
   # Converts HTML file at given path to MD.
