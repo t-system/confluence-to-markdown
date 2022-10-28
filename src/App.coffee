@@ -41,7 +41,7 @@ class App
   # @param {string} dirIn Directory to go through
   # @param {string} dirOut Directory where to place converted MD files
   ###
-  convert: (dirIn, dirOut) ->
+  convert: (dirIn, dirOut, runScript) ->
     filePaths = @utils.readDirRecursive dirIn
     pages = (@pageFactory.create filePath for filePath in filePaths when filePath.endsWith '.html')
 
@@ -57,13 +57,14 @@ class App
     @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
     
     @logger.info 'Markdown conversion done'
-    @logger.info '\nRun Cleanup Scripts...\n'
 
-    linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
-    out = @_exec linkScriptCmd
-    console.log(out.stdout)
-    @logger.error out.stderr if out.status > 0
-    
+    if runScript != false
+      @logger.info '\nRun Cleanup Scripts...\n'
+
+      linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
+      out = @_exec linkScriptCmd
+      console.log(out.stdout)
+      @logger.error out.stderr if out.status > 0
 
 
   ###*
@@ -112,8 +113,7 @@ class App
       "---"]
     metadataPrefix = metadataPrefix.map (x) -> "<div>#{x}</div>"
     metadataPrefix = metadataPrefix.join ''
-    
-    console.log(metadataPrefix)
+
     markdown = turndownService.turndown(metadataPrefix + text)
 
     @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
