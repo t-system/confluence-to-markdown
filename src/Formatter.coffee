@@ -45,7 +45,7 @@ class Formatter
   getRightContentByFileName: ($content, fileName) ->
     if fileName == 'index.html'
       $content.find('#content')
-        .find('#main-content>.confluenceTable').remove().end() # Removes arbitrary table located on top of index page
+        # .find('#main-content>.confluenceTable').remove().end() # Removes arbitrary table located on top of index page
     else
       selector = [
         '#content'
@@ -55,6 +55,14 @@ class Formatter
       ]
       $content.find selector.join ', '
 
+  getLocalDir: ($content) ->
+    $ = @_cheerio
+    locaDir = []
+
+    $content.find('#breadcrumbs a').each (i, elem) =>
+      locaDir.push $(elem).text()
+
+    return locaDir.join('/')
 
   ###*
   # Removes span inside of a h1 tag.

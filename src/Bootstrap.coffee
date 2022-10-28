@@ -9,6 +9,7 @@ class Bootstrap
   _turndownService = require 'turndown'
   _turndownPluginGfm = require 'joplin-turndown-plugin-gfm'
   _confluenceTurndownPluginGfm = require 'turndown-plugin-confluence-to-gfm'
+  _figlet = require 'figlet'
 
   Utils = require './Utils'
   Logger = require './Logger'
@@ -21,7 +22,7 @@ class Bootstrap
   # @param {string} pathResource Directory with HTML files or one file. Can be nested.
   # @param {string|void} pathResult Directory where MD files will be generated to. Current dir will be used if none given.
   ###
-  run: (pathResource, pathResult = '') ->
+  run: (pathResource, pathResult = '', runScript = false) ->
     pathResource = _path.resolve pathResource
     pathResult = _path.resolve pathResult
 
@@ -30,14 +31,64 @@ class Bootstrap
     formatter = new Formatter _cheerio, utils, logger
     pageFactory = new PageFactory formatter, utils
     app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm
+  
 
+    logger.info _figlet.textSync 'say', {
+      font: 'standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'goodbye', {
+      font: 'Big Money-ne',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'to', {
+      font: 'standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 80,
+      whitespaceBreak: true
+    }
+    logger.info _figlet.textSync 'confluence', {
+      font: 'Bloody',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 100,
+      whitespaceBreak: true
+    }
 
-    console.log('\n--------------------')
+    logger.info '\n----------------------------------------'
     logger.info 'Using source: ' + pathResource
     logger.info 'Using destination: ' + pathResult
-    console.log('--------------------\n')
+    logger.info '----------------------------------------\n'
 
-    app.convert pathResource, pathResult
+    app.convert pathResource, pathResult, runScript
+    logger.info '\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣉⡥⠶⢶⣿⣿⣿⣿⣷⣆⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡿⢡⡞⠁⠀⠀⠤⠈⠿⠿⠿⠿⣿⠀⢻⣦⡈⠻⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡇⠘⡁⠀⢀⣀⣀⣀⣈⣁⣐⡒⠢⢤⡈⠛⢿⡄⠻⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⡇⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠉⠐⠄⡈⢀⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⠇⢠⣿⣿⣿⣿⡿⢿⣿⣿⣿⠁⢈⣿⡄⠀⢀⣀⠸⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⡿⠟⣡⣶⣶⣬⣭⣥⣴⠀⣾⣿⣿⣿⣶⣾⣿⣧⠀⣼⣿⣷⣌⡻⢿⣿\n
+    ⣿⣿⠟⣋⣴⣾⣿⣿⣿⣿⣿⣿⣿⡇⢿⣿⣿⣿⣿⣿⣿⡿⢸⣿⣿⣿⣿⣷⠄⢻\n
+    ⡏⠰⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢂⣭⣿⣿⣿⣿⣿⠇⠘⠛⠛⢉⣉⣠⣴⣾\n
+    ⣿⣷⣦⣬⣍⣉⣉⣛⣛⣉⠉⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿⢰⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡘⣿⣿⣿⣿⣿⣿⣿⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿\n
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⠁⣿⣿⣿⣿⣿⣿⣿⣿⣿\n
+'
+    logger.info _figlet.textSync 'export complete', {
+      font: 'Standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+      width: 100,
+      whitespaceBreak: true
+    }
 
 
 module.exports = Bootstrap

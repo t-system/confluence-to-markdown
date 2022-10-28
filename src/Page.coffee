@@ -9,6 +9,7 @@ class Page
   init: () ->
     @fileName = @utils.getBasename @path
     @fileBaseName = @utils.getBasename @path, '.html'
+    @confluenceId = @utils.getConfluenceIdFromName(@fileBaseName)
     @filePlainText = @utils.readFile @path
     @$ = @formatter.load @filePlainText
     @content = @$.root()
@@ -21,11 +22,12 @@ class Page
   getSpacePath: () ->
     '../' + @utils.sanitizeFilename(@space) + '/' + @fileNameNew
 
-
+  getFileNameNewRaw: () ->
+    return 'index' if @fileName == 'index.html'
+    @utils.sanitizeFilename(@heading)
+  
   getFileNameNew: () ->
-    return 'index.md' if @fileName == 'index.html'
-    @utils.sanitizeFilename(@heading) + '.md'
-
+    return @getFileNameNewRaw() + '.md'
 
   getHeading: () ->
     title = @content.find('title').text()
@@ -35,12 +37,15 @@ class Page
       indexName = @content.find('#breadcrumbs .first').text().trim()
       title.replace indexName + ' : ', ''
 
+  getLocalDir: () ->
+    return @formatter.getLocalDir(@content)
+
 
   ###*
   # Converts HTML file at given path to MD formatted text.
   # @return {string} Content of a file parsed to MD
   ###
-  getTextToConvert: (pages) ->
+  getTextToConvert: () ->
     content = @formatter.getRightContentByFileName @content, @fileName
     content = @formatter.fixHeadline content
     content = @formatter.fixIcon content
@@ -52,7 +57,7 @@ class Page
     content = @formatter.fixArbitraryClasses content
     content = @formatter.fixAttachmentWraper content
     content = @formatter.fixPageLog content
-    content = @formatter.fixLocalLinks content, @space, pages
+    # content = @formatter.fixLocalLinks content, @space, pages
     content = @formatter.addPageHeading content, @heading
     @formatter.getHtml content
 
