@@ -56,15 +56,16 @@ class App
 
     @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
     
-    @logger.info 'Markdown conversion done'
+    @logger.info 'Markdown conversion done!'
 
     if runScript != false
-      @logger.info '\nRun Cleanup Scripts...\n'
+      @logger.info '\nRunning cleanup scripts...\n'
 
       linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
       out = @_exec linkScriptCmd
-      console.log(out.stdout)
+      @logger.info out.stdout
       @logger.error out.stderr if out.status > 0
+      @logger.info 'Cleanup scripts done!\n'
 
 
   ###*
