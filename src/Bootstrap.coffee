@@ -31,11 +31,10 @@ class Bootstrap
     pageFactory = new PageFactory formatter, utils
     app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm
 
-
-    console.log('\n--------------------')
+    logger.info '\n----------------------------------------'
     logger.info 'Using source: ' + pathResource
     logger.info 'Using destination: ' + pathResult
-    console.log('--------------------\n')
+    logger.info '----------------------------------------\n'
 
     app.convert pathResource, pathResult
 

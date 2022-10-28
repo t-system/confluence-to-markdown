@@ -45,7 +45,7 @@ class Page
   # Converts HTML file at given path to MD formatted text.
   # @return {string} Content of a file parsed to MD
   ###
-  getTextToConvert: (pages) ->
+  getTextToConvert: () ->
     content = @formatter.getRightContentByFileName @content, @fileName
     content = @formatter.fixHeadline content
     content = @formatter.fixIcon content

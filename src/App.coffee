@@ -46,14 +46,24 @@ class App
     pages = (@pageFactory.create filePath for filePath in filePaths when filePath.endsWith '.html')
 
     indexHtmlFiles = []
+    rootSpace = ''
     for page in pages
       do (page) =>
         if page.fileName == 'index.html'
+          rootSpace = page.space
           indexHtmlFiles.push @_path.join page.space, 'index' # gitit requires link to pages without .md extension
-        @convertPage page, dirIn, dirOut, pages
+        @convertPage page, dirIn, dirOut
 
     @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
-    @logger.info 'Conversion done'
+    
+    @logger.info 'Markdown conversion done'
+    @logger.info '\nRun Cleanup Scripts...\n'
+
+    linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
+    out = @_exec linkScriptCmd
+    console.log(out.stdout)
+    @logger.error out.stderr if out.status > 0
+    
 
 
   ###*
@@ -61,18 +71,21 @@ class App
   # @param {Page} page Page entity of HTML file
   # @param {string} dirOut Directory where to place converted MD files
   ###
-  convertPage: (page, dirIn, dirOut, pages) ->
-    @logger.info 'Parsing ... ' + page.path
+  convertPage: (page, dirIn, dirOut) ->
+    try
+      @logger.info 'Parsing ' + page.path
 
-    text = page.getTextToConvert pages
-    localDir = page.getLocalDir()
+      text = page.getTextToConvert()
+      localDir = page.getLocalDir()
+      fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
 
-    fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
+      @logger.info 'Making Markdown ' + fullOutFileName
+      @writeMarkdownFile text, fullOutFileName, page.confluenceId
+      @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
+      @logger.info 'Done\n'
+    catch e
+      @logger.error 'ERROR: Page conversion for ' + page.path + ' failed - ' + e
 
-    @logger.info 'Making Markdown ... ' + fullOutFileName
-    @writeMarkdownFile text, fullOutFileName, page.confluenceId
-    @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
-    @logger.info 'Done\n'
 
 
   ###*
@@ -92,7 +105,17 @@ class App
     turndownService.use(@_turndownPluginGfm.gfm)
     turndownService.use(@_confluenceTurndownPluginGfm.confluenceGfm)
 
-    markdown = turndownService.turndown((confluenceId || '') + text)
+
+    metadataPrefix = ["---",
+      "confluence-id: #{confluenceId || ''}",
+      "confluence-space: %%CONFLUENCE-SPACE%%",
+      "---"]
+    metadataPrefix = metadataPrefix.map (x) -> "<div>#{x}</div>"
+    metadataPrefix = metadataPrefix.join ''
+    
+    console.log(metadataPrefix)
+    markdown = turndownService.turndown(metadataPrefix + text)
+
     @_fs.writeFileSync fullOutFileName, markdown, flag: 'w'
 
 

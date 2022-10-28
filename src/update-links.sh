@@ -1,12 +1,13 @@
 shopt -s globstar
-space="$1"
+targetDir="$1"
+space="$2"
 
 # Make all confluence links easy to find & replace
 wmConfluence='https://workingmouse.atlassian.net/wiki/spaces/'
 # perl -pi -e "s^\Q$wmConfluence\E\([\^/]*\)\Q/pages/\E\([\^/]*\)/[\^)]*^%%CONFLUENCE_\$1_\$2%%^g" **/*.md
 
 declare -A articles
-for file in **/*.md; do
+for file in $targetDir/**/*.md; do
     id="$(head -1 "$file")"
     articles[$id]=$file
     echo "$id => $file"
