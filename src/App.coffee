@@ -44,7 +44,7 @@ class App
   convert: (dirIn, dirOut, runScript) ->
     @logger.info 'Converting HTML to markdown...\n'
     filePaths = @utils.readDirRecursive dirIn
-    pages = (@pageFactory.create filePath for filePath in filePaths when filePath.endsWith '.html')
+    pages = (@pageFactory.create filePath for filePath in filePaths when (!filePath.includes('attachments') && filePath.endsWith '.html'))
 
     indexHtmlFiles = []
     rootSpace = ''
@@ -62,6 +62,7 @@ class App
 
     if runScript != false
       @logger.info '\nRunning cleanup scripts...\n'
+      @logger.info '\n(terminal may go unresponsive for a moment here)\n'
 
       linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
       out = @_exec linkScriptCmd
