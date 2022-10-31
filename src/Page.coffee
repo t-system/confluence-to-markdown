@@ -40,6 +40,10 @@ class Page
   getLocalDir: () ->
     return @formatter.getLocalDir(@content)
 
+  getIndexSpace: () ->
+    # this is only useful if the page is index.html
+    return @content.find('th:contains("Key")').next().text()
+
 
   ###*
   # Converts HTML file at given path to MD formatted text.

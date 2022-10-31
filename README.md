@@ -15,8 +15,10 @@ It's a good idea to create an 'output' folder somewhere to target with the `path
 In the converter's directory:
 
 ```
-npm run start <pathResource> <pathResult> <runPostProcessScript>
+yarn start <pathResource> <pathResult> <runPostProcessScript>
 ```
+e.g
+`yarn start /Users/john/Downloads/targetfoldername /Users/john/Downloads/outputfoldername true`
 
 ### Parameters
 
@@ -31,6 +33,8 @@ parameter | description
 To run the Post Process Script directly:
 
 `bash <pathToUpdateLinksScript> <pathResult> <spaceName>`
+
+When the script is run from the node project, the space name is derived from the root index.html "Space Detail" "Key" field.
 
 ### Parameters
 
