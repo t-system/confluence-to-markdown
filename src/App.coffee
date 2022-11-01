@@ -72,7 +72,7 @@ class App
 
     if runScript != false
       @logger.info '\nRunning cleanup scripts...'
-      @logger.info '(terminal may go unresponsive for a moment here)'
+      @logger.info '(terminal may go unresponsive for a bit here)'
 
       linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
       out = @_exec linkScriptCmd

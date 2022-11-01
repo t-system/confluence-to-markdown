@@ -27,6 +27,7 @@ parameter | description
 `<pathResource>` | File or directory to convert with extracted Confluence export
 `<pathResult>` | Directory to where the output will be generated to. Defaults to current working directory
 <runPostProcessScript> | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
+<verboseLoggin> | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
 ### Optional
 
