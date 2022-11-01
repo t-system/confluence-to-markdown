@@ -33,7 +33,7 @@ class Bootstrap
     app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm, verbose
 
     logger.info _figlet.textSync 'say', {
-      font: 'standard',
+      font: 'Standard',
       horizontalLayout: 'default',
       verticalLayout: 'default',
       width: 80,
@@ -47,7 +47,7 @@ class Bootstrap
       whitespaceBreak: true
     }
     logger.info _figlet.textSync 'to', {
-      font: 'standard',
+      font: 'Standard',
       horizontalLayout: 'default',
       verticalLayout: 'default',
       width: 80,
