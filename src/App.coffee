@@ -57,7 +57,6 @@ class App
           
           rootSpace = page.getIndexSpace()
           @logger.info if rootSpace.length then 'Found Confluence space in index.html' else 'Error: Confluence space in index.html not found'
-          
           assetDir = @_path.join dirOut, page.space, page.getLocalDir()
           @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(assetDir)
 
@@ -96,7 +95,7 @@ class App
 
       text = page.getTextToConvert()
       localDir = page.getLocalDir()
-      fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
+      fullOutFileName = @_path.join dirOut, localDir, page.fileNameNew
 
       if @verbose then @logger.info 'Making Markdown ' + fullOutFileName
       @writeMarkdownFile text, fullOutFileName, page.confluenceId
