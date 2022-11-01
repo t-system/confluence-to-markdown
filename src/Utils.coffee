@@ -134,10 +134,12 @@ class Utils
   # @param {string} dirOut Directory where to place converted MD files
   ###
   copyAssets: (pathWithHtmlFiles, dirOut) ->
-    for asset in ['images', 'attachments']
-      assetsDirIn = @_path.join pathWithHtmlFiles, asset
-      assetsDirOut = @_path.join dirOut, asset
+    @logger.info '\nCopying assets from ' + pathWithHtmlFiles + ' to ' + dirOut
+    for assetFolder in ['images', 'attachments']
+      assetsDirIn = @_path.join pathWithHtmlFiles, assetFolder
+      assetsDirOut = @_path.join dirOut, assetFolder
       @_ncp assetsDirIn, assetsDirOut if @isDir(assetsDirIn)
+    @logger.info 'Assets copied!'
 
 
 module.exports = Utils

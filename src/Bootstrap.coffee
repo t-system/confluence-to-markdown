@@ -22,7 +22,7 @@ class Bootstrap
   # @param {string} pathResource Directory with HTML files or one file. Can be nested.
   # @param {string|void} pathResult Directory where MD files will be generated to. Current dir will be used if none given.
   ###
-  run: (pathResource, pathResult = '', runScript = false) ->
+  run: (pathResource, pathResult = '', runScript = false, verbose = false) ->
     pathResource = _path.resolve pathResource
     pathResult = _path.resolve pathResult
 
@@ -30,8 +30,7 @@ class Bootstrap
     utils = new Utils _fs, _path, _ncp, logger
     formatter = new Formatter _cheerio, utils, logger
     pageFactory = new PageFactory formatter, utils
-    app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm
-  
+    app = new App _fs, _exec, _path, _mkdirp, utils, formatter, pageFactory, logger, _turndownService, _turndownPluginGfm, _confluenceTurndownPluginGfm, verbose
 
     logger.info _figlet.textSync 'say', {
       font: 'standard',

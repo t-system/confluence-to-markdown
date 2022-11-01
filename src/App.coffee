@@ -25,7 +25,7 @@ class App
   # @param {PageFactory} pageFactory My lib
   # @param {Logger} logger My lib
   ###
-  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger, @_turndownService, @_turndownPluginGfm, @_confluenceTurndownPluginGfm) ->
+  constructor: (@_fs, @_exec, @_path, @_mkdirp, @utils, @formatter, @pageFactory, @logger, @_turndownService, @_turndownPluginGfm, @_confluenceTurndownPluginGfm, @verbose) ->
     typesAdd = App.outputTypesAdd.join '+'
     typesRemove = App.outputTypesRemove.join '-'
     typesRemove = if typesRemove then '-' + typesRemove else ''
@@ -42,32 +42,48 @@ class App
   # @param {string} dirOut Directory where to place converted MD files
   ###
   convert: (dirIn, dirOut, runScript) ->
-    @logger.info 'Converting HTML to markdown...\n'
+    @logger.info 'Converting HTML to markdown...'
     filePaths = @utils.readDirRecursive dirIn
     pages = (@pageFactory.create filePath for filePath in filePaths when (!filePath.includes('attachments') && filePath.endsWith '.html'))
-
+    @logger.info 'Found ' + pages.length + ' pages'
     indexHtmlFiles = []
     rootSpace = ''
+    
+    progress = 0
     for page in pages
       do (page) =>
         if page.fileName == 'index.html'
+          @logger.info '\nFound root index file'
+          
           rootSpace = page.getIndexSpace()
+          @logger.info if rootSpace.length then 'Found Confluence space in index.html' else 'Error: Confluence space in index.html not found'
+          
+          assetDir = @_path.join dirOut, page.space, page.getLocalDir()
+          @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(assetDir)
+
           indexHtmlFiles.push @_path.join page.space, 'index' # gitit requires link to pages without .md extension
         @convertPage page, dirIn, dirOut
-    @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
+        progress += 1
+        @printProgress('Progress ' + Math.round ((progress / pages.length) * 100))
+    # @writeGlobalIndexFile indexHtmlFiles, dirOut if not @utils.isFile dirIn
     
-    @logger.info 'Markdown conversion done!'
+    @logger.info '\nMarkdown conversion done!'
     @logger.info '----------------------------------------'
 
     if runScript != false
-      @logger.info '\nRunning cleanup scripts...\n'
-      @logger.info '\n(terminal may go unresponsive for a moment here)\n'
+      @logger.info '\nRunning cleanup scripts...'
+      @logger.info '(terminal may go unresponsive for a moment here)'
 
       linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
       out = @_exec linkScriptCmd
-      @logger.info out.stdout
+      if @verbose then @logger.info '\n' + out.stdout
       @logger.error out.stderr if out.status > 0
-      @logger.info 'Cleanup scripts done!\n'
+      @logger.info '\nCleanup scripts done!\n'
+
+  printProgress: (progress) ->
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(progress + '%');
 
   ###*
   # Converts HTML file at given path to MD.
@@ -76,16 +92,16 @@ class App
   ###
   convertPage: (page, dirIn, dirOut) ->
     try
-      @logger.info 'Parsing ' + page.path
+      if @verbose then @logger.info '\nParsing ' + page.path
 
       text = page.getTextToConvert()
       localDir = page.getLocalDir()
       fullOutFileName = @_path.join dirOut, page.space, localDir, page.fileNameNew
 
-      @logger.info 'Making Markdown ' + fullOutFileName
+      if @verbose then @logger.info 'Making Markdown ' + fullOutFileName
       @writeMarkdownFile text, fullOutFileName, page.confluenceId
-      @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
-      @logger.info 'Done\n'
+      # @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
+      if @verbose then @logger.info 'Done\n'
     catch e
       @logger.error 'ERROR: Page conversion for ' + page.path + ' failed - ' + e
 
