@@ -60,8 +60,8 @@ class Formatter
     localDir = []
 
     $content.find('#breadcrumbs a').each (i, elem) =>
-      localDir.push $(elem).text()
-
+      text = $(elem).text()
+      localDir.push @utils.sanitizeFilename(text)
     return localDir.slice(2, localDir.length).join('/')
 
   ###*
