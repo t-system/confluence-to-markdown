@@ -25,7 +25,7 @@ It's a good idea to create an 'output' folder somewhere to target with the `path
 In the converter's directory:
 
 ```
-yarn start <pathResource> <pathResult> <runPostProcessScript> <verboseLogging>
+yarn start <inputPath> <outputPath> <runPostProcessScript> <verboseLogging>
 ```
 e.g
 `yarn start /Users/john/Downloads/targetfoldername /Users/john/Downloads/outputfoldername true`
@@ -34,8 +34,8 @@ e.g
 
 parameter | description
 --- | ---
-`<pathResource>` | File or directory to convert with extracted Confluence export
-`<pathResult>` | Directory to where the output will be generated to. Defaults to current working directory
+`<inputPath>` | File or directory to convert with extracted Confluence export
+`<outputPath>` | Directory to where the output will be generated to. Defaults to current working directory but you should probably specify a folder because I haven't tested it in a long time.
 <runPostProcessScript> | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
 <verboseLogging> | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
