@@ -24,10 +24,10 @@ It's a good idea to create an 'output' folder somewhere to target with the `path
 In the converter's directory:
 
 ```
-yarn start <inputPath> <outputPath> <runPostProcessScript> <verboseLogging>
+yarn start <inputPath> <outputPath> <confluenceUrl> <runPostProcessScript> <verboseLogging>
 ```
 e.g
-`yarn start /Users/john/Downloads/targetfoldername /Users/john/Downloads/outputfoldername true`
+`yarn start /Users/john/Documents/targetfoldername /Users/john/Documents/outputfoldername https://mycompany.atlassian.net/wiki/spaces/ true`
 
 ### Parameters
 
@@ -35,6 +35,7 @@ parameter | description
 --- | ---
 `<inputPath>` | File or directory to convert with extracted Confluence export
 `<outputPath>` | Directory to where the output will be generated to.
+`<confluenceUrl>` | Confluence URL to be used when updating links
 `<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
 `<verboseLogging>` | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
