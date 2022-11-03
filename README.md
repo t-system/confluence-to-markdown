@@ -12,7 +12,6 @@
 ⣿⣷⣦⣬⣍⣉⣉⣛⣛⣉⠉⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿⢰⣿⣿⣿⣿⣿⣿⣿⣿<br>
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡘⣿⣿⣿⣿⣿⣿⣿⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿<br>
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⠁⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
-So you want to quit Confluence eh?
 ## Requirements
 
 Setup
@@ -35,7 +34,7 @@ e.g
 parameter | description
 --- | ---
 `<inputPath>` | File or directory to convert with extracted Confluence export
-`<outputPath>` | Directory to where the output will be generated to. Defaults to current working directory but you should probably specify a folder because I haven't tested it in a long time.
+`<outputPath>` | Directory to where the output will be generated to.
 `<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
 `<verboseLogging>` | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
@@ -54,5 +53,3 @@ When the script is run from the node project, the space name is derived from the
 | `<pathToUpdateLinksScript>` | Absolute path to `update-links.sh` in the `./src` folder of the project |
 | `<outputPath>`              | Directory to the markdown files that need to be processed    |
 | `<spaceName>`               | Name of the root confluence space                            |
-
-### 
