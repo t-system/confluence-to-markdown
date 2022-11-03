@@ -36,14 +36,14 @@ parameter | description
 --- | ---
 `<inputPath>` | File or directory to convert with extracted Confluence export
 `<outputPath>` | Directory to where the output will be generated to. Defaults to current working directory but you should probably specify a folder because I haven't tested it in a long time.
-<runPostProcessScript> | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
-<verboseLogging> | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
+`<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
+`<verboseLogging>` | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
 ### Optional
 
 To run the Post Process Script directly:
 
-`bash <pathToUpdateLinksScript> <pathResult> <spaceName>`
+`bash <pathToUpdateLinksScript> <outputPath> <spaceName>`
 
 When the script is run from the node project, the space name is derived from the root index.html "Space Detail" "Key" field.
 
@@ -52,7 +52,7 @@ When the script is run from the node project, the space name is derived from the
 | parameter                   | description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
 | `<pathToUpdateLinksScript>` | Absolute path to `update-links.sh` in the `./src` folder of the project |
-| `<pathResult>`              | Directory to where the output will be generated to. Defaults to current working directory |
-| <spaceName>                 | Name of the root confluence space                            |
+| `<outputPath>`              | Directory to the markdown files that need to be processed    |
+| `<spaceName>`               | Name of the root confluence space                            |
 
 ### 
