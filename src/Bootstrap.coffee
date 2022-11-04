@@ -22,7 +22,7 @@ class Bootstrap
   # @param {string} pathResource Directory with HTML files or one file. Can be nested.
   # @param {string|void} pathResult Directory where MD files will be generated to. Current dir will be used if none given.
   ###
-  run: (pathResource, pathResult = '', runScript = false, verbose = false) ->
+  run: (pathResource, pathResult = '', runScript = false, verbose = false, confluenceUrl) ->
     pathResource = _path.resolve pathResource
     pathResult = _path.resolve pathResult
 
@@ -66,7 +66,7 @@ class Bootstrap
     logger.info 'Using destination: ' + pathResult
     logger.info '----------------------------------------\n'
 
-    app.convert pathResource, pathResult, runScript
+    app.convert pathResource, pathResult, runScript, confluenceUrl
     logger.info '\n
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣉⡥⠶⢶⣿⣿⣿⣿⣷⣆⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿\n

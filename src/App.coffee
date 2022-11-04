@@ -41,7 +41,7 @@ class App
   # @param {string} dirIn Directory to go through
   # @param {string} dirOut Directory where to place converted MD files
   ###
-  convert: (dirIn, dirOut, runScript) ->
+  convert: (dirIn, dirOut, runScript, confluenceUrl) ->
     @logger.info 'Converting HTML to markdown...'
     filePaths = @utils.readDirRecursive dirIn
     pages = (@pageFactory.create filePath for filePath in filePaths when (!filePath.includes('attachments') && filePath.endsWith '.html'))
@@ -73,7 +73,7 @@ class App
       @logger.info '\nRunning cleanup scripts...'
       @logger.info '(terminal may go unresponsive for a bit here)'
 
-      linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace
+      linkScriptCmd = 'bash ./src/update-links.sh ' + dirOut + ' ' + rootSpace + ' ' + confluenceUrl
       out = @_exec linkScriptCmd
       if @verbose then @logger.info '\n' + out.stdout
       @logger.error out.stderr if out.status > 0

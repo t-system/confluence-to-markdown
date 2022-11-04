@@ -2,6 +2,7 @@
 shopt -s globstar
 targetDir="$1"
 space="$2"
+confluenceUrl="$3"
 
 usage() {
 	echo >&2 "Usage: confluence_md_relinker.sh DIRECTORY SPACE"
@@ -36,8 +37,7 @@ changes=""
 
 # Change any confluence links to a uniform format
 # Should make further find/replace easier to complete.
-wmConfluence='https://workingmouse.atlassian.net/wiki/spaces/'
-changes+="s^\\Q$wmConfluence\\E([\\^/]*)/pages/([\\^/]*)/[\\^)]*^%%CONFLUENCE_\$1_\$2%%^g; "
+changes+="s^\\Q$confluenceUrl\\E([\\^/]*)/pages/([\\^/]*)/[\\^)]*^%%CONFLUENCE_\$1_\$2%%^g; "
 # Some links incorrectly convert to local html links of format 'Title_1234567890.html'
 changes+="s^\\([\\^(/]*([0-9]{10}).html\\)^(%%CONFLUENCE_${space}_\$1%%)^g; "
 
