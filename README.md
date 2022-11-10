@@ -14,7 +14,10 @@
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⠁⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
 ## Requirements
 
-Setup
+### You will require a HTML export of the Confluence space using the default Confluence export tool. This is found at:
+`https://<YOUR_ATLASSIAN_DOMAIN>.atlassian.net/wiki/spaces/exportspacewelcome.action?key=<PROJECT_KEY>`
+
+Setup:
 Clone and run `yarn` in root directory
 
 ## Usage
@@ -27,7 +30,7 @@ In the converter's directory:
 yarn start <inputPath> <outputPath> <confluenceUrl> <runPostProcessScript> <verboseLogging>
 ```
 e.g
-`yarn start /Users/john/Documents/targetfoldername /Users/john/Documents/outputfoldername https://mycompany.atlassian.net/wiki/spaces/ true false`
+`yarn start /Users/john/Documents/targetfoldername /Users/john/Documents/outputfoldername https://<YOUR_ATLASSIAN_DOMAIN>.atlassian.net/wiki/spaces/ true false`
 
 ### Parameters
 
@@ -35,7 +38,7 @@ parameter | description
 --- | ---
 `<inputPath>` | File or directory to convert with extracted Confluence export
 `<outputPath>` | Directory to where the output will be generated to.
-`<confluenceUrl>` | Confluence URL to be used when updating links. Must include trailing slash `/`
+`<confluenceUrl>` | Confluence URL to be used when updating links. Must include trailing slash, 'wiki' and 'spaces' url paths (see example)
 `<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
 `<verboseLogging>` | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
@@ -54,3 +57,4 @@ When the script is run from the node project, the space name is derived from the
 | `<pathToUpdateLinksScript>` | Absolute path to `update-links.sh` in the `./src` folder of the project |
 | `<outputPath>`              | Directory to the markdown files that need to be processed    |
 | `<spaceName>`               | Name of the root confluence space                            |
+| `<confluenceUrl>`           | Confluence URL to be used when updating links. Must include trailing slash `/`                      |
