@@ -61,11 +61,15 @@ When the script is run from the node project, the space name is derived from the
 
 ## Recognition
 
-Original source code:
+### Original Project and packages:
+
 Eric White / Meridus for the original [Confluence to Markdown](https://github.com/meridius/confluence-to-markdown)
+
 Dom Christie and community for [Turndown](https://github.com/mixmark-io/turndown)
+
 Guyplusplus for [Turndown Plugin Confluence to GFM](https://github.com/guyplusplus/turndown-plugin-confluence-to-gfm)
 
-Current modifications
+### Current modifications
 Node.js project changes: John Briggs [jdeb9](https://github.com/jdeb9)
+
 Bash script post-processing: Michael Ruigrok
