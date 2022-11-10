@@ -54,3 +54,4 @@ When the script is run from the node project, the space name is derived from the
 | `<pathToUpdateLinksScript>` | Absolute path to `update-links.sh` in the `./src` folder of the project |
 | `<outputPath>`              | Directory to the markdown files that need to be processed    |
 | `<spaceName>`               | Name of the root confluence space                            |
+| `<confluenceUrl>`           | Confluence URL to be used when updating links. Must include trailing slash `/`                      |
