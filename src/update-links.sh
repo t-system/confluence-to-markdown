@@ -1,11 +1,8 @@
 #!/bin/bash
 shopt -s globstar
-targetDir="$1"
-space="$2"
-confluenceUrl="$3"
 
 usage() {
-	echo >&2 "Usage: confluence_md_relinker.sh DIRECTORY SPACE"
+	echo >&2 "Usage: confluence_md_relinker.sh [--no-article-dir] DIRECTORY SPACE"
 }
 
 if [ "$1" = "--help" ]; then
@@ -13,11 +10,30 @@ if [ "$1" = "--help" ]; then
 	exit 0
 fi
 
+articleDir=true
+
+while [ $# -ne 0 ]; do
+	case "$1" in
+		--no-article-dir) articleDir=false
+			shift
+			;;
+		-- )
+			shift
+			break
+			;;
+		* ) break
+			;;
+	esac
+done 
+
+targetDir="$1"
+space="$2"
+confluenceUrl="$3"
+
 if ! [ -d "$targetDir" ] || [ -z "$space" ]; then
 	usage
 	exit 1
 fi
-
 
 # Make all confluence links easy to find & replace
 (cd "$targetDir"
@@ -30,6 +46,24 @@ for file in **/*.md; do
 	fi
 done
 echo "Successfully moved files"
+
+if [ "$articleDir" = true ]; then
+	echo "Creating a personal directory for each given article (if it doesn't have one already)"
+	for file in **/*.md; do
+		baseName="$(basename "$file" .md)"
+		dir="$(dirname "$file")"
+		directDir="$(basename "$dir")"
+
+		if [ "$directDir" = "$baseName" \
+			-a "$(ls "$dir/"*.md | wc -l)" -eq 1 ]; then
+			continue
+		fi
+
+		mkdir -p "$dir/$baseName"
+		mv "$file" "$dir/$baseName/$baseName.md"
+	done
+	echo "Successfully created directories"
+fi
 
 
 echo "Finding links to be updated..."
@@ -61,4 +95,34 @@ done
 echo "Applying link changes..."
 perl -pi -e "$changes" **/*.md
 echo "Link changes applied"
+
+if [ "$articleDir" != true ]; then
+	exit 0
+fi
+
+echo "Re-organising attachments..."
+for file in **/*.md; do
+	attachments="$(perl -ne 'for (/\]\((attachments(?:[^)?]|\\\)|\\?)*)(?:\?[^)]*)?\)/g) { print "$_\n"; }' "$file" | sort -u)"
+	for attachment in $attachments; do
+		dir="$(dirname "$file")"
+		base="$(basename "$attachment")"
+
+		# Bigger than 10MB is a bad precedent to set for Gitlab.
+		if [ "$(stat --printf="%s" "$attachment" )" -gt 10000000 ]; then
+			echo >&2 "WARNING: Refusing to copy attachment '$attachment' from file '$file'"
+			echo >&2 "This file is too big for Gitlab. Please move it to Sharepoint and link from there, or reduce the file-size."
+			continue
+		fi
+
+		if ! echo "$base" | grep -q '\.'; then
+			fileType="$(file -b --extension "$attachment" | sed s^/.*^^)"
+			base="$base.$fileType"
+		fi
+
+		cp "$attachment" "$dir/$base" # copy in case of duplicates
+		perl -pi -e "s^\Q$attachment\E^./$base^g" "$file"
+	done
+done
+echo "Attachments successfully organised"
+
 )
