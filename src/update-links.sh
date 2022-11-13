@@ -2,7 +2,7 @@
 shopt -s globstar
 
 usage() {
-	echo >&2 "Usage: confluence_md_relinker.sh [--no-article-dir] DIRECTORY SPACE"
+	echo >&2 "Usage: ./update-links.sh [--no-article-dir] DIRECTORY SPACE CONFLUENCE_URL_PREFIX"
 }
 
 if [ "$1" = "--help" ]; then
@@ -15,6 +15,9 @@ articleDir=true
 while [ $# -ne 0 ]; do
 	case "$1" in
 		--no-article-dir) articleDir=false
+			shift
+			;;
+		--no-file-size-limit) noFileSizeLimit=true
 			shift
 			;;
 		-- )
@@ -30,7 +33,7 @@ targetDir="$1"
 space="$2"
 confluenceUrl="$3"
 
-if ! [ -d "$targetDir" ] || [ -z "$space" ]; then
+if ! [ -d "$targetDir" ] || [ -z "$space" -o -z "$confluenceUrl" ]; then
 	usage
 	exit 1
 fi
@@ -107,10 +110,12 @@ for file in **/*.md; do
 		dir="$(dirname "$file")"
 		base="$(basename "$attachment")"
 
-		# Bigger than 10MB is a bad precedent to set for Gitlab.
-		if [ "$(stat --printf="%s" "$attachment" )" -gt 10000000 ]; then
+		# Across dozens of documents, storing files in Git can become a big issue.
+		# Thus, we do not migrate attachments over 10MB in size.
+		if [ "$noFileSizeLimit" != true \
+			-a "$(stat --printf="%s" "$attachment" )" -gt 10000000 ]; then
 			echo >&2 "WARNING: Refusing to copy attachment '$attachment' from file '$file'"
-			echo >&2 "This file is too big for Gitlab. Please move it to Sharepoint and link from there, or reduce the file-size."
+			echo >&2 "This file is too big for Git to usually handle. Please upload it to file storage and link from there, or reduce its file-size."
 			continue
 		fi
 
