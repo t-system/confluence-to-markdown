@@ -39,7 +39,7 @@ parameter | description
 `<inputPath>` | File or directory to convert with extracted Confluence export
 `<outputPath>` | Directory to where the output will be generated to.
 `<confluenceUrl>` | Confluence URL to be used when updating links. Must include trailing slash, 'wiki' and 'spaces' url paths (see example)
-`<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script 
+`<runPostProcessScript>` | OPTIONAL 'true' to run the file location cleanup and link fix script, 'false' or omitted to not run the script
 `<verboseLogging>` | OPTIONAL 'true' to log in detail, 'false' or omitted to run with default minimal logging
 
 ### Optional
@@ -72,4 +72,4 @@ Guyplusplus for [Turndown Plugin Confluence to GFM](https://github.com/guypluspl
 ### Current modifications
 Node.js project changes: John Briggs [jdeb9](https://github.com/jdeb9)
 
-Bash script post-processing: Michael Ruigrok
+Bash script post-processing: Michael Ruigrok [michaelruigrok](https://github.com/michaelruigrok)
