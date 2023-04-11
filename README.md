@@ -19,7 +19,7 @@ In the converter's directory:
 yarn start <inputPath> <outputPath> <confluenceUrl> <runPostProcessScript> <verboseLogging>
 ```
 e.g
-`yarn start /Users/john/Documents/targetfoldername /Users/john/Documents/outputfoldername https://<YOUR_ATLASSIAN_DOMAIN>.atlassian.net/wiki/spaces/ true false`
+`yarn start /Users/<User>/Documents/targetfoldername /Users/<User>/Documents/outputfoldername https://<YOUR_ATLASSIAN_DOMAIN>.atlassian.net/wiki/spaces/ true false`
 
 ### Parameters
 
