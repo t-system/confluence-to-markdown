@@ -1,5 +1,5 @@
 # Confluence to Markdown converter
-(that works right now but probably not in a few months time)
+(that works right now but probably not in a few months time, but if you tell us we'll fix it!)
 
 ## Requirements
 
@@ -57,6 +57,8 @@ Eric White / Meridus for the original [Confluence to Markdown](https://github.co
 Dom Christie and community for [Turndown](https://github.com/mixmark-io/turndown)
 
 Guyplusplus for [Turndown Plugin Confluence to GFM](https://github.com/guyplusplus/turndown-plugin-confluence-to-gfm)
+
+Arch-nemesis: [Markdown to Confluence uploader](https://github.com/lanyonm/markdown-to-confluence-uploader)
 
 ### Current modifications
 Node.js project changes: John Briggs [jdeb9](https://github.com/jdeb9)
