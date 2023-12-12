@@ -96,13 +96,14 @@ class App
       text = page.getTextToConvert()
       localDir = page.getLocalDir()
       fullOutFileName = @_path.join dirOut, localDir, page.fileNameNew
+      # @logger.info '\nfullOutFileName = ' + fullOutFileName
 
       if @verbose then @logger.info 'Making Markdown ' + fullOutFileName
       @writeMarkdownFile text, fullOutFileName, page.confluenceId
       # @utils.copyAssets @utils.getDirname(page.path), @utils.getDirname(fullOutFileName)
       if @verbose then @logger.info 'Done\n'
     catch e
-      @logger.error 'ERROR: Page conversion for ' + page.path + ' failed - ' + e
+      @logger.error 'ERROR: Page conversion for ' + page.path + ' failed - ' + e + e.stack
 
 
 

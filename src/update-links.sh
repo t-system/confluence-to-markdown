@@ -77,6 +77,7 @@ changes=""
 changes+="s^\\Q$confluenceUrl\\E([\\^/]*)/pages/([\\^/]*)/[\\^)]*^%%CONFLUENCE_\$1_\$2%%^g; "
 # Some links incorrectly convert to local html links of format 'Title_1234567890.html'
 changes+="s^\\([\\^(/]*([0-9]{10}).html\\)^(%%CONFLUENCE_${space}_\$1%%)^g; "
+changes+="s/\/display\/$space\//\//; "
 
 # Set confluence space within the front matter
 changes+="s/%%CONFLUENCE-SPACE%%/$space/; "

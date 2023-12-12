@@ -81,8 +81,12 @@ class Utils
     # *  (asterisk)
     #    (other punctuation, while not strictly invalid, can lead to errors if copy-pasting filenames into shells or scripts)
     # Finally, collapse multiple contiguous underscores into a single underscore
-    name.replace(/[\s<>()\[\]{}:;'`"\/\\|?\*~!@#$%^&,]/g, ' ').replace(/  +/g, ' ')
-
+    name.replace(/[\s<>()\[\]{}:;'`"\/\\|?\*~!@#$%^&,]/g, '-').replace(/  +/g, '-')
+    # sanitized = name.replace(/[\s<>()\[\]{}:;'`"\/\\|?\*~!@#$%^&,]/g, '-').replace(/  +/g, '-')
+    # Azure DevOps Wiki has a filename limit of 235 characters
+    # if sanitized.length > 230
+    #    sanitized = sanitized.slice(0,229)
+    # return sanitized
 
   getBasename: (path, extension) ->
     @_path.basename path, extension
